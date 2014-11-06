@@ -4,12 +4,13 @@ import pymunk
 import pygame
 
 def     add_object(space, objs, size, pos):
-    mass = size * 150.0
+    mass = size
     radius = size
 
     inertia = pymunk.moment_for_circle(mass, 0, radius)
     body = pymunk.Body(mass, inertia)
     body.position = pos
+    body.friction = 2
 
     shape = pymunk.Circle(body, radius)
     space.add(body, shape)
@@ -34,8 +35,8 @@ def     main():
 
     bodies = []
 
-    s = add_object(space, bodies, 100, (640, 360))
-    space.remove(s.body)
+    s = add_object(space, bodies, 1000, (-500, -500))
+    # space.remove(s.body)
 
     while not ended:
         screen.fill(0xFFFFFFFF)
@@ -50,7 +51,9 @@ def     main():
         for ball in bodies:
             for ball2 in bodies:
                 if ball != ball2:
-                    ball.body.apply_force((ball2.body.position - ball.body.position).normalized() * (250 - ball2.body.position.get_distance(ball.body.position)))
+                    vec = (ball2.body.position - ball.body.position).normalized() * ((ball.body.mass * ball2.body.mass) / pow(ball2.body.position.get_distance(ball.body.position), 2))
+                    pygame.draw.line(screen, 0xFF0000, ball.body.position, ball.body.position + (vec * 50000.0))
+                    ball.body.apply_force(vec)
             draw_ball(screen, ball)
 
         postscreen = pygame.transform.flip(screen, False, True)
