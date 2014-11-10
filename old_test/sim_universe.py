@@ -1,5 +1,6 @@
 #!/usr/bin/env python2
 
+import math
 import  sys
 import  pymunk
 import  pygame
@@ -188,7 +189,9 @@ def     main():
         vehicle.render(prescreen, camera_pos)
 
         postscreen = pygame.transform.flip(prescreen, False, True)
-        screen.blit(postscreen, (0, 0))
+        print(vehicle.box.body.angle)
+        nscreen = rot_center(postscreen, -math.degrees(vehicle.box.body.angle))
+        screen.blit(nscreen, (0, 0))
         pygame.display.flip()
         space.step(1/50.0)
         clock.tick(50)

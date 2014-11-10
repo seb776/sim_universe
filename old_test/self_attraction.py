@@ -5,6 +5,8 @@ import pygame
 
 def     add_object(space, objs, size, pos):
     mass = size
+    if size > 15:
+        mass = size * 100
     radius = size
 
     inertia = pymunk.moment_for_circle(mass, 0, radius)
@@ -19,7 +21,7 @@ def     add_object(space, objs, size, pos):
 
 def     draw_ball(screen, ball):
     coords = (int(ball.body.position.x), int(ball.body.position.y))
-    pygame.draw.circle(screen, 0x123456, coords, int(ball.radius), 2)
+    pygame.draw.circle(screen, 0x123456, coords, int(ball.radius), 0)
 
 def     main():
     pygame.init()
@@ -33,13 +35,16 @@ def     main():
     clock = pygame.time.Clock()
     ended = False
 
+    background = pygame.image.load("space.png")
+
     bodies = []
 
     s = add_object(space, bodies, 1000, (-500, -500))
     # space.remove(s.body)
 
     while not ended:
-        screen.fill(0xFFFFFFFF)
+        # screen.fill(0xFFFFFFFF)
+        screen.blit(background, (0, 0))
         # event
         for event in pygame.event.get():
             if event.type == 5:
@@ -52,7 +57,7 @@ def     main():
             for ball2 in bodies:
                 if ball != ball2:
                     vec = (ball2.body.position - ball.body.position).normalized() * ((ball.body.mass * ball2.body.mass) / pow(ball2.body.position.get_distance(ball.body.position), 2))
-                    pygame.draw.line(screen, 0xFF0000, ball.body.position, ball.body.position + (vec * 50000.0))
+                    pygame.draw.line(screen, 0x03C6FF, ball.body.position, ball.body.position + (vec * 50000.0))
                     ball.body.apply_force(vec)
             draw_ball(screen, ball)
 
