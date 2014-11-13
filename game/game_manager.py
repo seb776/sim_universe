@@ -14,7 +14,7 @@ class GameData:
         self.gravity_center = []
         self.under_gravity = []
 
-class SpaceEngine:
+class Game:
     def __init__(self, screen_size, title = "SpaceEngine"):
         pygame.display.init()
         pygame.font.init()

@@ -1,8 +1,8 @@
 #!/usr/bin/env python2
 
-from space_engine import SpaceEngine
+from game_manager import Game
 
 if __name__ == "__main__":
-    game = SpaceEngine((1280, 720))
+    game = Game((1280, 720))
 
     game.start()
