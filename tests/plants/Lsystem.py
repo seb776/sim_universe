@@ -33,12 +33,12 @@ class Plant:
     def draw_forward(self, surface, length):
         dest = [length * math.cos(self.current[2]) + self.current[0], length * math.sin(self.current[2]) + self.current[1]]
         # colors = [0x8B527A]
-        color = 0x6033AB # if len(self.contexts) + 1 > len(colors) else colors[len(self.contexts)]
+        color = 0x000000 # if len(self.contexts) + 1 > len(colors) else colors[len(self.contexts)]
         pygame.draw.line(surface, color, (self.current[0], self.current[1]), dest, 1)
         self.current = [dest[0], dest[1], self.current[2]]
 
     def generate(self, surface, axiom, n):
-        self.current = [400, 700, -3.1415 / 3]
+        self.current = [400, 350, -3.1415 / 2.5]
         self.contexts = []
         n_axiom = ""
         for letter in axiom:
@@ -77,14 +77,17 @@ if __name__ == "__main__":
     screen = pygame.display.set_mode(win_size)
 
     plant = Plant()
+    img = pygame.image.load("planet2.png")
     while True:
         for event in pygame.event.get():
             if event.type == QUIT:
                 exit(1)
-            i = 0
-            while i < 10:
-                print_degrade(screen, 26, [0x05, 0xA9, 0xBF], [0xEC, 0x84, 0x97])
-                plant.generate(screen, "X", i)
-                pygame.time.wait(500)
-                i += 1
-                pygame.display.flip()
+            screen.blit(img, (0, 0))
+            plant.generate(screen, "X", 7)
+            # i = 0
+            # while i < 10:
+            #     print_degrade(screen, 26, [0x05, 0xA9, 0xBF], [0xEC, 0x84, 0x97])
+            #     plant.generate(screen, "X", i)
+            #     pygame.time.wait(500)
+            #     i += 1
+            pygame.display.flip()
