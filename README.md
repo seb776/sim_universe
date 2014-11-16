@@ -1,12 +1,17 @@
-sim_universe
+# sim_universe
 ============
 
 simulation of a mini universe in 2D
 
-TO DO:
+## TO DO:
 
--Simulation of gravity between bodies with a physical engine
--Proceduraly generated asteroids, planets, solar systems and a galaxy
--Drivable spaceship
--get in/out of a ship
+### Tests
 
+- Proceduraly generated asteroids, planets, solar systems and a galaxy
+- Drivable spaceship
+- Continue tests on the L-system
+- Zoom/Angle of camera with ECS
+
+### MainDev
+
+- implement ECS
