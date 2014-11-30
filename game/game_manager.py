@@ -79,4 +79,4 @@ class Game:
     def start_game(self):
         self.load_screen()
         game_instance = GameInstance()
-        return game_instance.start()
+        return game_instance.start(self.screen)
