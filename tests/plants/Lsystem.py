@@ -3,6 +3,21 @@
 import math
 import pygame
 from pygame.locals import *
+from pygame.color import *
+
+def print_degrade(surface, steps, _from, to):
+    step = [(-_from[0] + to[0]) / steps, (-_from[1] + to[1]) / steps, (-_from[2] + to[2]) / steps]
+    size = (1280, 720 / steps)
+    pos = (0, 0)
+    b = steps
+    while steps:
+        color = pygame.Color(_from[0] + step[0], _from[1] + step[1], _from[2] + step[2], 0)
+        pygame.draw.rect(surface, color, pygame.Rect(pos, size))
+        _from[0] = _from[0] + step[0]
+        _from[1] = _from[1] + step[1]
+        _from[2] = _from[2] + step[2]
+        pos = (0, pos[1] + (720 / b))
+        steps -= 1
 
 class Plant:
     def turn_left(self, surface, length):
@@ -32,13 +47,14 @@ class Plant:
 
     def draw_forward(self, surface, length):
         dest = [length * math.cos(self.current[2]) + self.current[0], length * math.sin(self.current[2]) + self.current[1]]
-        color = 0x8B527A
+        # color = 0x8B527A
+        color = 0xB9C76F
         # color = 0x000000 # if len(self.contexts) + 1 > len(colors) else colors[len(self.contexts)]
         pygame.draw.line(surface, color, (self.current[0], self.current[1]), dest, 1)
         self.current = [dest[0], dest[1], self.current[2]]
 
     def generate(self, surface, axiom, n):
-        self.current = [400, 500, -3.1415 / 2.5]
+        self.current = [400, 650, -3.1415 / 2.5]
         self.contexts = []
         n_axiom = ""
         for letter in axiom:
@@ -83,7 +99,9 @@ if __name__ == "__main__":
         for event in pygame.event.get():
             if event.type == QUIT:
                 exit(1)
-            screen.blit(img, (0, 0))
+            # screen.blit(img, (0, 0))
+            screen.fill(THECOLORS["white"])
+            print_degrade(screen, 50, [0xFF, 0xFF, 0xFF], [0xE5, 0xD7, 0xE7])
             plant.generate(screen, "X", 8)
             # i = 0
             # while i < 10:
